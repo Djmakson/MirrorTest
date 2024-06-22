@@ -1,0 +1,28 @@
+
+stages:                                     # each stage runs on a new Docker image. data is not persisted between stages by default.
+  - publish_image                           # build docker image and push to registry
+
+build and push docker image:        
+  stage: publish_image
+   
+  variables:
+    DOCKER_REGISTRY: 138103081920.dkr.ecr.us-east-1.amazonaws.com/test
+    AWS_DEFAULT_REGION: us-east-1
+    APP_NAME: ayodejitest
+    DOCKER_HOST: tcp://docker:2375
+    DOCKER_DRIVER: overlay2
+    DOCKER_TLS_CERTDIR: ""
+  
+  #your repo name for the image
+  image: 
+    name: amazon/aws-cli
+    entrypoint: [""]
+  services:
+    - docker:dind 
+  before_script:
+    - amazon-linux-extras install docker
+    - aws ecr get-login-password --region $AWS_DEFAULT_REGION | docker login --username AWS --password-stdin $DOCKER_REGISTRY
+  script:
+    - docker build -t $DOCKER_REGISTRY/$APP_NAME:"v.$CI_PIPELINE_IID" .
+    #- aws ecr get-login-password | docker login --username AWS --password-stdin $DOCKER_REGISTRY 
+    - docker push $DOCKER_REGISTRY/$APP_NAME:"v.$CI_PIPELINE_IID"
