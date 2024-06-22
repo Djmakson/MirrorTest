@@ -6,7 +6,7 @@ build and push docker image:
   stage: publish_image
    
   variables:
-    DOCKER_REGISTRY: 138103081920.dkr.ecr.us-east-1.amazonaws.com/test
+    DOCKER_REGISTRY: 138103081920.dkr.ecr.us-east-1.amazonaws.com
     AWS_DEFAULT_REGION: us-east-1
     APP_NAME: ayodejitest
     DOCKER_HOST: tcp://docker:2375
