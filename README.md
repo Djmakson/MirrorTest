@@ -1,5 +1,5 @@
 # Test
-This is a test for Mirroring
+This is a test for Mirroring from Gitlab to GitHub.
 
 
 ## Getting started
